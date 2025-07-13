@@ -311,37 +311,7 @@ body {
   background: linear-gradient(135deg, #65a30d 0%, #4d7c0f 100%);
 }
 
-/* Indikator scroll horizontal */
-.table-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  background: rgba(132, 204, 22, 0.1);
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-}
 
-.table-wrapper:hover::after {
-  opacity: 1;
-}
-
-/* Indikator dengan icon panah */
-.table-wrapper::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2384cc16'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'/%3E%3C/svg%3E");
-  background-size: 12px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
 
 table {
   width: 100%;
