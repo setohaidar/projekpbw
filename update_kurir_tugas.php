@@ -26,17 +26,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // Ambil data tugas saat ini untuk validasi
-        $stmt_get_data = $conn->prepare("SELECT user_id, status, jenis_sampah, berat FROM $tabel WHERE id = ? AND kurir_id = ?");
-        $stmt_get_data->bind_param("ii", $tugas_id, $kurir_id);
-        $stmt_get_data->execute();
-        $result_data = $stmt_get_data->get_result();
-        if ($result_data->num_rows == 0) {
-            header("Location: dashboard_kurir.php?error=unauthorized");
-            exit();
+        // Ambil data tugas saat ini untuk validasi - berbeda untuk setiap tipe tugas
+        $data_tugas = null;
+        $user_id_penerima = null;
+        
+        if ($tipe_tugas == 'penjemputan') {
+            // Untuk pengajuan sampah - ada kolom jenis_sampah dan berat
+            $stmt_get_data = $conn->prepare("SELECT user_id, status, jenis_sampah, berat FROM pengajuan WHERE id = ? AND kurir_id = ?");
+            $stmt_get_data->bind_param("ii", $tugas_id, $kurir_id);
+            $stmt_get_data->execute();
+            $result_data = $stmt_get_data->get_result();
+            if ($result_data->num_rows == 0) {
+                header("Location: dashboard_kurir.php?error=unauthorized");
+                exit();
+            }
+            $data_tugas = $result_data->fetch_assoc();
+            $user_id_penerima = $data_tugas['user_id'];
+            $stmt_get_data->close();
+        } elseif ($tipe_tugas == 'pengiriman') {
+            // Untuk penukaran poin - tidak ada kolom jenis_sampah dan berat
+            $stmt_get_data = $conn->prepare("SELECT user_id, status FROM penukaran_poin WHERE id = ? AND kurir_id = ?");
+            $stmt_get_data->bind_param("ii", $tugas_id, $kurir_id);
+            $stmt_get_data->execute();
+            $result_data = $stmt_get_data->get_result();
+            if ($result_data->num_rows == 0) {
+                header("Location: dashboard_kurir.php?error=unauthorized");
+                exit();
+            }
+            $data_tugas = $result_data->fetch_assoc();
+            $user_id_penerima = $data_tugas['user_id'];
+            $stmt_get_data->close();
         }
-        $data_tugas = $result_data->fetch_assoc();
-        $user_id_penerima = $data_tugas['user_id'];
         
         $conn->begin_transaction();
         try {
