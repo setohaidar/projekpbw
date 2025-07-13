@@ -213,7 +213,7 @@
 
 .reward-image {
   width: 100%;
-  height: 200px;
+  height: 300px;
   margin-bottom: 1.5rem;
   position: relative;
   overflow: hidden;
@@ -222,25 +222,31 @@
   align-items: center;
   justify-content: center;
   background: #f8fafc;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .reward-image img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: calc(100% - 40px);
+  max-height: calc(100% - 40px);
   width: auto;
   height: auto;
   object-fit: contain;
   object-position: center;
-  transition: transform 0.4s ease;
+  transition: transform 0.3s ease;
   border-radius: 8px;
   vertical-align: middle;
+  display: block;
+  margin: auto;
+  /* Pastikan gambar tidak terpotong */
+  flex-shrink: 0;
   /* Fallback untuk browser lama */
   -webkit-object-fit: contain;
   -webkit-object-position: center;
 }
 
 .reward-card:hover .reward-image img {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .reward-image::after {
@@ -477,12 +483,15 @@
   }
 
   .reward-image {
-    height: 160px;
+    height: 240px;
     margin-bottom: 1rem;
+    padding: 15px;
   }
   
   .reward-image img {
     border-radius: 6px;
+    max-width: calc(100% - 30px);
+    max-height: calc(100% - 30px);
   }
 
   .reward-info {
