@@ -1,8 +1,9 @@
-/* dashboard_admin.css - Fresh Green Theme */
+/* dashboard_admin.css - Enhanced Fresh Green Theme */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 html {
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 :root {
@@ -17,59 +18,232 @@ html {
   --text-secondary: #6b7280;
   --text-white: #f9fafb;
   --border: #e5e7eb;
-  --status-pending-bg: #fefce8; --status-pending-text: #a16207;
-  --status-approved-bg: #f0fdf4; --status-approved-text: #15803d;
-  --status-rejected-bg: #fef2f2; --status-rejected-text: #b91c1c;
-  --status-scheduled-bg: var(--light-green); --status-scheduled-text: var(--dark-green);
-  --status-completed-bg: #f3f4f6; --status-completed-text: #4b5563;
+  --status-pending-bg: #fefce8; 
+  --status-pending-text: #a16207;
+  --status-approved-bg: #f0fdf4; 
+  --status-approved-text: #15803d;
+  --status-rejected-bg: #fef2f2; 
+  --status-rejected-text: #b91c1c;
+  --status-scheduled-bg: var(--light-green); 
+  --status-scheduled-text: var(--dark-green);
+  --status-completed-bg: #f3f4f6; 
+  --status-completed-text: #4b5563;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
-body, * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Inter", sans-serif; }
-body { background: var(--background); }
-.admin-wrapper { display: flex; min-height: 100vh; }
-.admin-sidebar { width: 280px; background: var(--sidebar-bg); color: var(--text-white); display: flex; flex-direction: column; flex-shrink: 0; }
-.sidebar-header { padding: 2rem 1.5rem; text-align: center; border-bottom: 1px solid #374151; }
-.sidebar-header h2 { font-size: 1.5rem; }
-.sidebar-nav { flex-grow: 1; list-style: none; padding: 1rem 0; }
-.sidebar-nav a { display: block; padding: 1rem 1.5rem; color: #d1d5db; text-decoration: none; font-weight: 500; }
-.sidebar-nav a:hover { background: var(--sidebar-hover); color: white; }
-.sidebar-nav a.active { background: var(--primary-green); color: white; font-weight: 600; }
-.sidebar-footer { padding: 1.5rem; border-top: 1px solid #374151; }
-.sidebar-footer span { display: block; margin-bottom: 1rem; font-weight: 600; }
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  font-family: "Inter", sans-serif; 
+}
+
+body { 
+  background: var(--background);
+  line-height: 1.6;
+}
+
+.admin-wrapper { 
+  display: flex; 
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Sidebar Styles */
+.admin-sidebar { 
+  width: 280px; 
+  background: var(--sidebar-bg); 
+  color: var(--text-white); 
+  display: flex; 
+  flex-direction: column; 
+  flex-shrink: 0;
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.3s ease;
+  position: fixed;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.sidebar-header { 
+  padding: 2rem 1.5rem; 
+  text-align: center; 
+  border-bottom: 1px solid #374151;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+}
+
+.sidebar-header h2 { 
+  font-size: 1.5rem; 
+  margin-bottom: 1rem;
+}
+
+.sidebar-nav { 
+  flex-grow: 1; 
+  list-style: none; 
+  padding: 1rem 0; 
+}
+
+.sidebar-nav li {
+  margin: 0.5rem 0;
+}
+
+.sidebar-nav a { 
+  display: block; 
+  padding: 1rem 1.5rem; 
+  color: #d1d5db; 
+  text-decoration: none; 
+  font-weight: 500;
+  border-radius: 0 25px 25px 0;
+  margin-right: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.sidebar-nav a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--primary-green);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.sidebar-nav a:hover { 
+  background: var(--sidebar-hover); 
+  color: white;
+  transform: translateX(8px);
+}
+
+.sidebar-nav a:hover::before {
+  transform: scaleY(1);
+}
+
+.sidebar-nav a.active { 
+  background: var(--primary-green); 
+  color: white; 
+  font-weight: 600;
+  transform: translateX(8px);
+}
+
+.sidebar-nav a.active::before {
+  transform: scaleY(1);
+}
 
 .btn-logout { 
   display: block; 
   width: 100%; 
-  padding: 8px 12px;
+  padding: 12px 16px;
   background: #ef4444; 
   color: white; 
   border-radius: 8px; 
   text-decoration: none; 
   text-align: center; 
-  font-weight: 500;
+  font-weight: 600;
   border: none;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-logout:hover {
   background-color: #dc2626;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-logout:active {
   background-color: #b91c1c;
   transform: translateY(0);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow-sm);
 }
 
-.admin-main-content { flex-grow: 1; padding: 2.5rem; overflow-x: auto; }
-.content-header h1 { font-size: 2.25rem; margin-bottom: 2rem; }
+/* Main Content */
+.admin-main-content { 
+  flex-grow: 1; 
+  padding: 2.5rem; 
+  overflow-x: auto;
+  margin-left: 280px;
+  transition: margin-left 0.3s ease;
+}
 
+.content-header {
+  margin-bottom: 2rem;
+}
+
+.content-header h1 { 
+  font-size: 2.5rem; 
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Search Input */
+.content-header input[type="text"] {
+  width: 100%;
+  padding: 16px 20px;
+  margin-top: 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.content-header input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(132, 204, 22, 0.1);
+}
+
+/* Filter Buttons */
+.filter-buttons { 
+  display: flex; 
+  gap: 12px; 
+  margin-top: 1.5rem; 
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn { 
+  padding: 12px 20px; 
+  border: 2px solid var(--border); 
+  background-color: var(--surface); 
+  color: var(--text-secondary); 
+  border-radius: 25px; 
+  cursor: pointer; 
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-btn:hover { 
+  background-color: var(--light-green); 
+  border-color: var(--primary-green); 
+  color: var(--dark-green);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.filter-btn.active { 
+  background-color: var(--primary-green); 
+  color: white; 
+  border-color: var(--primary-green);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Table Styles */
 .table-wrapper {
   background: var(--surface);
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  overflow-x: auto;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 table {
@@ -77,80 +251,157 @@ table {
   border-collapse: collapse;
 }
 
-/* === PERUBAHAN DI SINI === */
-td { 
-  padding: 1rem 1.5rem; 
-  text-align: center; /* Mengatur isi sel menjadi di tengah */
-  border-bottom: 1px solid var(--border); 
-  vertical-align: middle; /* Mengatur posisi vertikal menjadi di tengah */
-}
-
 th { 
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.8rem; 
-  font-weight: 600; 
+  padding: 1.5rem;
+  border-bottom: 2px solid var(--border);
+  font-size: 0.85rem; 
+  font-weight: 700; 
   color: var(--text-secondary); 
   text-transform: uppercase; 
   text-align: center; 
-  vertical-align: middle; /* Mengatur posisi vertikal menjadi di tengah */
+  vertical-align: middle;
+  background: #f8fafc;
+  letter-spacing: 0.05em;
 }
 
-tbody tr:last-child td { border-bottom: none; }
+td { 
+  padding: 1.5rem; 
+  text-align: center;
+  border-bottom: 1px solid var(--border); 
+  vertical-align: middle;
+  transition: background-color 0.2s ease;
+}
 
+tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+tbody tr:last-child td { 
+  border-bottom: none; 
+}
+
+/* Status Badges */
 .status {
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-weight: 700;
   font-size: 0.8rem;
   text-align: center;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: var(--shadow-sm);
+}
+
+.status.menunggu-persetujuan, .status.menunggu-konfirmasi { 
+  background-color: var(--status-pending-bg); 
+  color: var(--status-pending-text); 
+}
+
+.status.disetujui, .status.siap-dikirim { 
+  background-color: var(--status-scheduled-bg); 
+  color: var(--status-scheduled-text); 
+}
+
+.status.jadwal-ditentukan, .status.dalam-pengiriman { 
+  background-color: var(--primary-green); 
+  color: white; 
+}
+
+.status.ditolak { 
+  background-color: var(--status-rejected-bg); 
+  color: var(--status-rejected-text); 
+}
+
+.status.selesai { 
+  background-color: var(--status-completed-bg); 
+  color: var(--status-completed-text); 
+}
+
+/* Action Buttons */
+.action-cell { 
   white-space: nowrap; 
 }
-.status.menunggu-persetujuan, .status.menunggu-konfirmasi { background-color: var(--status-pending-bg); color: var(--status-pending-text); }
-.status.disetujui, .status.siap-dikirim { background-color: var(--status-scheduled-bg); color: var(--status-scheduled-text); }
-.status.jadwal-ditentukan, .status.dalam-pengiriman { background-color: var(--primary-green); color: white; }
-.status.ditolak { background-color: var(--status-rejected-bg); color: var(--status-rejected-text); }
-.status.selesai { background-color: var(--status-completed-bg); color: var(--status-completed-text); }
 
-.action-cell { white-space: nowrap; }
-.action-form, .action-cell form { display: flex; gap: 0.5rem; align-items: center; justify-content: center; }
-.action-cell button, .action-cell .btn-approve, .action-cell .btn-reject { padding: 8px 14px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btn-approve { background-color: var(--primary-green); color: white; }
-.btn-approve:hover { background-color: var(--dark-green); }
-.btn-reject { background-color: #fee2e2; color: #ef4444; }
-.btn-reject:hover { background-color: #fecaca; }
-.action-cell select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; margin-right: 0.5rem; }
+.action-form, .action-cell form { 
+  display: flex; 
+  gap: 8px; 
+  align-items: center; 
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-.filter-buttons { display: flex; gap: 10px; margin-top: 1.5rem; margin-bottom: 1rem; }
-.filter-btn { padding: 8px 16px; border: 1px solid var(--border); background-color: var(--surface); color: var(--text-secondary); border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.3s ease; }
-.filter-btn:hover { background-color: var(--light-green); border-color: var(--primary-green); color: var(--dark-green); }
-.filter-btn.active { background-color: var(--primary-green); color: white; border-color: var(--primary-green); }
+.action-cell button, .action-cell .btn-approve, .action-cell .btn-reject { 
+  padding: 10px 16px; 
+  border: none; 
+  border-radius: 8px; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-sm);
+}
 
-/* ================================== */
-/* STYLE BARU UNTUK TOMBOL HAPUS    */
-/* ================================== */
+.btn-approve { 
+  background-color: var(--primary-green); 
+  color: white; 
+}
 
+.btn-approve:hover { 
+  background-color: var(--dark-green);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-reject { 
+  background-color: #fee2e2; 
+  color: #ef4444; 
+}
+
+.btn-reject:hover { 
+  background-color: #fecaca;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.action-cell select { 
+  padding: 10px 14px; 
+  border: 2px solid var(--border); 
+  border-radius: 8px; 
+  margin-right: 8px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  background: var(--surface);
+}
+
+.action-cell select:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(132, 204, 22, 0.1);
+}
+
+/* Delete Button Styles */
 .btn-delete {
-  background-color: #ef4444; /* Warna dasar merah */
+  background-color: #ef4444;
   color: white;
-  padding: 8px 16px;
+  padding: 10px 16px;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
-  gap: 8px; /* Jarak antara ikon dan teks */
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-delete:hover {
-  background-color: #dc2626; /* Warna merah lebih gelap saat hover */
+  background-color: #dc2626;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-md);
 }
 
-/* Menambahkan ikon tempat sampah (SVG) sebelum teks */
 .btn-delete::before {
   content: '';
   display: inline-block;
@@ -162,35 +413,136 @@ tbody tr:last-child td { border-bottom: none; }
 }
 
 .btn-confirm {
- background-color: #16a34a; /* Warna hijau yang lebih menarik */
- color: white;
- padding: 10px 20px;
- border: none;
- border-radius: 8px;
- font-weight: 600;
- cursor: pointer;
- transition: all 0.2s ease;
+  background-color: #16a34a;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-confirm:hover {
- background-color: #15803d; /* Warna hijau lebih gelap saat hover */
- transform: translateY(-2px);
- box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #15803d;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
-.modal-content form button.btn-approve { /* Override style lama di modal */
-   background-color: #16a34a;
-   color: white;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 8px;
-   font-weight: 600;
-   cursor: pointer;
-   transition: all 0.2s ease;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+  }
+  
+  .admin-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  
+  .admin-main-content {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+  
+  .content-header h1 {
+    font-size: 2rem;
+  }
+  
+  .filter-buttons {
+    justify-content: center;
+  }
+  
+  .table-wrapper {
+    border-radius: 12px;
+  }
+  
+  .action-form {
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .action-cell button {
+    width: 100%;
+    min-width: 80px;
+  }
 }
 
-.modal-content form button.btn-approve:hover {
-   background-color: #15803d;
-   transform: translateY(-2px);
-   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+@media (max-width: 480px) {
+  .admin-main-content {
+    padding: 1rem;
+  }
+  
+  .content-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .filter-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  
+  th, td {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Loading and Animation States */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Success/Error Messages */
+.message {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.message.success {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.message.error {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  background: var(--primary-green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
 }

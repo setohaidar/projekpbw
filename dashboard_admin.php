@@ -58,8 +58,17 @@ $current_page = 'manajemen_sampah';
     <link rel="stylesheet" href="dashboard_admin.css">
 </head>
 <body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
     <div class="admin-wrapper">
-        <aside class="admin-sidebar">
+        <aside class="admin-sidebar" id="adminSidebar">
             <div class="sidebar-header">
                 <div style="margin-bottom: 1rem; text-align: center;">
                     <span style="font-size: 1rem; font-weight: 600; color: white;">Halo, <?php echo htmlspecialchars($_SESSION['nama_lengkap']); ?>!</span>
@@ -86,9 +95,30 @@ $current_page = 'manajemen_sampah';
         </aside>
 
         <main class="admin-main-content">
+            <!-- Display Messages -->
+            <?php if (isset($_GET['update'])): ?>
+                <div class="message <?php echo ($_GET['update'] == 'sukses') ? 'success' : 'error'; ?>">
+                    <?php if ($_GET['update'] == 'sukses'): ?>
+                        ✅ Status berhasil diperbarui!
+                    <?php else: ?>
+                        ❌ Terjadi kesalahan saat memperbarui status.
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_GET['assign'])): ?>
+                <div class="message <?php echo ($_GET['assign'] == 'sukses') ? 'success' : 'error'; ?>">
+                    <?php if ($_GET['assign'] == 'sukses'): ?>
+                        ✅ Kurir berhasil ditugaskan!
+                    <?php else: ?>
+                        ❌ Terjadi kesalahan saat menugaskan kurir.
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
             <div class="content-header">
                 <h1>Manajemen Pengajuan Sampah</h1>
-                <input type="text" id="searchInput" placeholder="Cari berdasarkan nama atau jenis sampah..." style="width: 100%; padding: 12px; margin-top: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <input type="text" id="searchInput" placeholder="Cari berdasarkan nama atau jenis sampah...">
                 
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-status="Semua">Semua</button>
@@ -96,6 +126,7 @@ $current_page = 'manajemen_sampah';
                     <button class="filter-btn" data-status="Jadwal Ditentukan">Jadwal Ditentukan</button>
                 </div>
             </div>
+
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -111,10 +142,10 @@ $current_page = 'manajemen_sampah';
                     </thead>
                     <tbody id="searchResultsBody">
                         <?php if (empty($pengajuan_list)): ?>
-                            <tr><td colspan="7" style="text-align:center;">Belum ada pengajuan sampah.</td></tr>
+                            <tr><td colspan="7" style="text-align:center; color: var(--text-secondary); padding: 3rem;">Belum ada pengajuan sampah.</td></tr>
                         <?php else: ?>
                             <?php foreach ($pengajuan_list as $p): ?>
-                                <tr>
+                                <tr class="fade-in">
                                     <td>#<?php echo $p['pengajuan_id']; ?></td>
                                     <td><?php echo htmlspecialchars($p['nama_user']); ?></td>
                                     <td><?php echo htmlspecialchars($p['jenis_sampah']); ?> (<?php echo $p['berat']; ?> kg)</td>
@@ -126,11 +157,11 @@ $current_page = 'manajemen_sampah';
                                             <form action="update_status.php" method="POST" class="action-form">
                                                 <input type="hidden" name="pengajuan_id" value="<?php echo $p['pengajuan_id']; ?>">
                                                 <input type="hidden" name="user_id_penerima" value="<?php echo $p['user_id']; ?>">
-                                                <button type="submit" name="status_baru" value="Disetujui" class="btn-approve">Setujui</button>
-                                                <button type="submit" name="status_baru" value="Ditolak" class="btn-reject">Tolak</button>
+                                                <button type="submit" name="status_baru" value="Disetujui" class="btn-approve" onclick="return confirm('Apakah Anda yakin ingin menyetujui pengajuan ini?')">Setujui</button>
+                                                <button type="submit" name="status_baru" value="Ditolak" class="btn-reject" onclick="return confirm('Apakah Anda yakin ingin menolak pengajuan ini?')">Tolak</button>
                                             </form>
                                         <?php elseif ($p['status'] == 'Jadwal Ditentukan'): ?>
-                                            <form action="assign_kurir.php" method="POST">
+                                            <form action="assign_kurir.php" method="POST" class="action-form">
                                                 <input type="hidden" name="pengajuan_id" value="<?php echo $p['pengajuan_id']; ?>">
                                                 <select name="kurir_id" required>
                                                     <option value="">-- Pilih Kurir --</option>
@@ -138,9 +169,9 @@ $current_page = 'manajemen_sampah';
                                                         <option value="<?php echo $kurir['id']; ?>"><?php echo htmlspecialchars($kurir['nama_lengkap']); ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <button type="submit">Tugaskan</button>
+                                                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menugaskan kurir ini?')">Tugaskan</button>
                                             </form>
-                                        <?php else: echo '-'; endif; ?>
+                                        <?php else: echo '<span style="color: var(--text-secondary);">-</span>'; endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -152,35 +183,115 @@ $current_page = 'manajemen_sampah';
     </div>
 
     <script>
+    // Mobile menu functionality
+    function toggleMobileMenu() {
+        const sidebar = document.getElementById('adminSidebar');
+        sidebar.classList.toggle('mobile-open');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const sidebar = document.getElementById('adminSidebar');
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        
+        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+            sidebar.classList.remove('mobile-open');
+        }
+    });
+
+    // Close mobile menu when window is resized to desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            document.getElementById('adminSidebar').classList.remove('mobile-open');
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.getElementById('searchInput');
         const filterButtons = document.querySelectorAll('.filter-btn');
+        const resultsBody = document.getElementById("searchResultsBody");
+        let searchTimeout;
 
+        // Debounced search function
         function performSearch() {
-            const query = searchInput.value;
+            const query = searchInput.value.trim();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-status');
-            const resultsBody = document.getElementById("searchResultsBody");
-
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "live_search.php", true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    resultsBody.innerHTML = this.responseText;
-                }
-            };
             
-            xhr.send("query=" + encodeURIComponent(query) + "&status=" + encodeURIComponent(activeFilter));
+            // Add loading state
+            resultsBody.classList.add('loading');
+            
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "live_search.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        resultsBody.classList.remove('loading');
+                        if (this.status == 200) {
+                            resultsBody.innerHTML = this.responseText;
+                            // Add fade-in animation to new results
+                            const newRows = resultsBody.querySelectorAll('tr');
+                            newRows.forEach((row, index) => {
+                                row.style.animationDelay = `${index * 0.05}s`;
+                                row.classList.add('fade-in');
+                            });
+                        } else {
+                            resultsBody.innerHTML = '<tr><td colspan="7" style="text-align:center; color: var(--status-rejected-text);">Terjadi kesalahan saat memuat data.</td></tr>';
+                        }
+                    }
+                };
+                
+                xhr.send("query=" + encodeURIComponent(query) + "&status=" + encodeURIComponent(activeFilter));
+            }, 300); // 300ms delay
         }
 
+        // Search input event
         searchInput.addEventListener('keyup', performSearch);
+        searchInput.addEventListener('input', performSearch);
 
+        // Filter buttons
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
+                // Remove active class from all buttons
                 filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
                 this.classList.add('active');
+                // Perform search with new filter
                 performSearch();
+            });
+        });
+
+        // Add keyboard navigation for accessibility
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                // Close mobile menu on escape
+                document.getElementById('adminSidebar').classList.remove('mobile-open');
+            }
+        });
+
+        // Auto-hide success/error messages after 5 seconds
+        const messages = document.querySelectorAll('.message');
+        messages.forEach(message => {
+            setTimeout(() => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 300);
+            }, 5000);
+        });
+
+        // Add loading animation to forms
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function() {
+                const submitBtn = form.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.style.opacity = '0.7';
+                    submitBtn.style.pointerEvents = 'none';
+                    submitBtn.innerHTML = submitBtn.innerHTML.replace(/^/, '⏳ ');
+                }
             });
         });
     });
