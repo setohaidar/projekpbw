@@ -21,6 +21,38 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+/* Animasi untuk form */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
 /* Form Container */
 .form-container {
   background: var(--surface);
@@ -33,6 +65,13 @@
   border: 1px solid var(--border);
   position: relative;
   overflow: hidden;
+  animation: fadeInScale 0.8s ease-out;
+  transition: all 0.3s ease;
+}
+
+.form-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -12px rgba(34, 197, 94, 0.15);
 }
 
 .form-container::before {
@@ -43,6 +82,8 @@
   right: 0;
   height: 4px;
   background: linear-gradient(90deg, var(--primary-green), var(--dark-green));
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite linear;
 }
 
 .form-container h2 {
@@ -65,6 +106,15 @@
 .input-group {
   margin-bottom: 1.5rem;
   position: relative;
+  animation: slideInUp 0.6s ease-out;
+}
+
+.input-group:nth-child(odd) {
+  animation-delay: 0.1s;
+}
+
+.input-group:nth-child(even) {
+  animation-delay: 0.2s;
 }
 
 .input-group label {
@@ -73,7 +123,8 @@
   font-weight: 500;
   color: var(--text-primary);
   font-size: 0.95rem;
-  transition: color 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .input-group input[type="text"],
@@ -93,6 +144,15 @@
   transition: all 0.3s ease;
   background: var(--surface);
   color: var(--text-primary);
+  position: relative;
+}
+
+.input-group input:hover,
+.input-group select:hover,
+.input-group textarea:hover {
+  border-color: var(--primary-green);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px -5px rgba(34, 197, 94, 0.2);
 }
 
 .input-group input:focus,

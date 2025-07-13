@@ -70,6 +70,24 @@ body { background: var(--background); }
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   overflow-x: auto;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.table-wrapper:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
 }
 
 table {
@@ -97,6 +115,22 @@ th {
 }
 
 tbody tr:last-child td { border-bottom: none; }
+
+/* Efek hover untuk table rows */
+tbody tr {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+tbody tr:hover {
+  background-color: var(--light-green);
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(132, 204, 22, 0.1);
+}
+
+tbody tr:hover td {
+  color: var(--dark-green);
+}
 
 .status {
   padding: 0.4rem 0.8rem;

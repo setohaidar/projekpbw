@@ -20,17 +20,143 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 body, * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Inter", sans-serif; }
-body { background: var(--background); display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-.form-container { background: var(--surface); padding: 3rem; border-radius: 24px; box-shadow: var(--shadow-xl); width: 100%; max-width: 440px; text-align: center; border: 1px solid var(--border); position: relative; }
-.form-container::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary-green), var(--dark-green)); border-radius: 24px 24px 0 0; }
+body { 
+  background: var(--background); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  min-height: 100vh; 
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.form-container { 
+  background: var(--surface); 
+  padding: 3rem; 
+  border-radius: 24px; 
+  box-shadow: var(--shadow-xl); 
+  width: 100%; 
+  max-width: 440px; 
+  text-align: center; 
+  border: 1px solid var(--border); 
+  position: relative; 
+  animation: slideUp 0.8s ease-out;
+  transition: all 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -12px rgba(132, 204, 22, 0.15);
+}
+
+.form-container::before { 
+  content: ""; 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  height: 4px; 
+  background: linear-gradient(90deg, var(--primary-green), var(--dark-green)); 
+  border-radius: 24px 24px 0 0; 
+}
 h2 { font-weight: 700; font-size: 2rem; margin-bottom: 0.5rem; }
 .form-container > p { color: var(--text-secondary); margin-bottom: 2.5rem; }
-.input-group { margin-bottom: 1.5rem; text-align: left; }
-.input-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-.input-group input { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; }
-.input-group input:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 3px rgb(132 204 22 / 0.2); }
-.btn-main { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s ease; }
-.btn-main:hover { transform: translateY(-2px); }
+.input-group { 
+  margin-bottom: 1.5rem; 
+  text-align: left; 
+  animation: slideUp 0.8s ease-out;
+}
+
+.input-group:nth-child(odd) {
+  animation-delay: 0.1s;
+}
+
+.input-group:nth-child(even) {
+  animation-delay: 0.2s;
+}
+
+.input-group label { 
+  display: block; 
+  margin-bottom: 0.5rem; 
+  font-weight: 500; 
+  transition: color 0.3s ease;
+}
+
+.input-group input { 
+  width: 100%; 
+  padding: 14px 16px; 
+  border: 2px solid var(--border); 
+  border-radius: 12px; 
+  font-size: 1rem; 
+  transition: all 0.3s ease; 
+  position: relative;
+}
+
+.input-group input:focus { 
+  outline: none; 
+  border-color: var(--border-focus); 
+  box-shadow: 0 0 0 3px rgb(132 204 22 / 0.2); 
+  transform: translateY(-2px);
+}
+
+.input-group input:focus + label {
+  color: var(--primary-green);
+}
+
+.btn-main { 
+  width: 100%; 
+  padding: 16px; 
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); 
+  color: white; 
+  border: none; 
+  border-radius: 12px; 
+  font-size: 1.1rem; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  position: relative;
+  overflow: hidden;
+  animation: slideUp 0.8s ease-out;
+  animation-delay: 0.4s;
+}
+
+.btn-main::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn-main:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-main:hover { 
+  transform: translateY(-4px) scale(1.02); 
+  box-shadow: 0 15px 30px -8px rgba(132, 204, 22, 0.3);
+}
 .switch-form { margin-top: 2rem; color: var(--text-secondary); }
 .switch-form a { color: var(--primary-green); font-weight: 600; text-decoration: none; }
 .switch-form a:hover { text-decoration: underline; }
