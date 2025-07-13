@@ -1,0 +1,189 @@
+/* dashboard_kurir.css - Fresh Green Theme */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --primary-green: #84cc16;
+  --dark-green: #65a30d;
+  --light-green: #f7fee7;
+  --background: #f9fafb;
+  --surface: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border: #e5e7eb;
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--background);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Header Styling */
+.kurir-header {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.kurir-header h1 {
+  font-size: 1.75rem;
+}
+
+.kurir-header nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.kurir-header nav span {
+  font-weight: 600;
+}
+
+.btn-logout {
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Container */
+.kurir-container {
+  padding: 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* No Task State */
+.no-task {
+  text-align: center;
+  padding: 4rem;
+  background: var(--surface);
+  border-radius: 16px;
+  color: var(--text-secondary);
+  border: 2px dashed var(--border);
+}
+
+/* Task Grid */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+/* Task Cards */
+.task-card {
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.task-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--light-green);
+}
+
+.task-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--dark-green);
+}
+
+/* Task Body */
+.task-body {
+  padding: 1.5rem;
+  flex-grow: 1;
+}
+
+.task-body p {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.task-body p strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+/* Task Footer */
+.task-footer {
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-top: 1px solid var(--border);
+}
+
+.task-footer form {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Action Buttons */
+.btn-action {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  flex-grow: 1;
+}
+
+.btn-action:hover {
+  opacity: 0.9;
+}
+
+.btn-finish, .btn-pickup {
+  background: var(--primary-green);
+}
+
+.btn-cancel {
+  background: #ef4444; /* Red for cancel */
+}
+
+/* Status Badges */
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.status.dalam-penjemputan, .status.dalam-pengiriman {
+  background: #2563eb; /* Blue for 'in progress' */
+}
+
+.status.sampah-sedang-diantar {
+  background: #9333ea; /* Purple for specific state */
+}

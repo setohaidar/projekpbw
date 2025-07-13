@@ -1,0 +1,94 @@
+/* status_pengajuan.css */
+.table-container {
+    overflow-x: auto; /* Agar tabel bisa di-scroll jika terlalu lebar di layar kecil */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+thead th {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* PERBAIKAN: Mencegah teks turun baris dan mengatur perataan vertikal */
+tbody td, thead th {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    white-space: nowrap; /* Mencegah konten membungkus ke baris baru */
+    vertical-align: middle; /* Membuat konten di tengah secara vertikal */
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.empty-data {
+    text-align: center;
+    color: #7f8c8d;
+    padding: 2rem;
+}
+
+/* Badge untuk Status (Lengkap) */
+.status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    text-transform: capitalize;
+}
+
+.status.menunggu-persetujuan { background-color: #ffc107; color: #333; }
+.status.disetujui { background-color: #28a745; }
+.status.jadwal-ditentukan { background-color: #007bff; }
+.status.dalam-penjemputan { background-color: #17a2b8; }
+.status.sampah-sedang-diantar { background-color: #6f42c1; }
+.status.selesai { background-color: #6c757d; }
+.status.ditolak, .status.dibatalkan { background-color: #dc3545; }
+
+/* PERBAIKAN: Menata formulir di dalam sel aksi */
+.action-cell .jadwal-form {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Memberi jarak antara input dan tombol */
+}
+
+.jadwal-form input[type="datetime-local"] {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.jadwal-form button {
+    padding: 7px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap; /* Mencegah teks tombol turun baris */
+}
+
+/* Kotak notifikasi */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+
+.alert.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}

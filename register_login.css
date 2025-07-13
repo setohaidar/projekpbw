@@ -1,0 +1,39 @@
+/* registerlogin.css - Fresh & Bright Green Theme */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --primary-green: #84cc16; /* Lime Green */
+  --dark-green: #65a30d;
+  --light-green: #f7fee7;
+  --background: #f9fafb;
+  --surface: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border: #e5e7eb;
+  --border-focus: var(--primary-green);
+  --error-bg: #fef2f2;
+  --error-text: #dc2626;
+  --error-border: #fecaca;
+  --success-bg: var(--light-green);
+  --success-text: var(--dark-green);
+  --success-border: #d9f99d;
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+body, * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Inter", sans-serif; }
+body { background: var(--background); display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+.form-container { background: var(--surface); padding: 3rem; border-radius: 24px; box-shadow: var(--shadow-xl); width: 100%; max-width: 440px; text-align: center; border: 1px solid var(--border); position: relative; }
+.form-container::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary-green), var(--dark-green)); border-radius: 24px 24px 0 0; }
+h2 { font-weight: 700; font-size: 2rem; margin-bottom: 0.5rem; }
+.form-container > p { color: var(--text-secondary); margin-bottom: 2.5rem; }
+.input-group { margin-bottom: 1.5rem; text-align: left; }
+.input-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.input-group input { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; }
+.input-group input:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 3px rgb(132 204 22 / 0.2); }
+.btn-main { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s ease; }
+.btn-main:hover { transform: translateY(-2px); }
+.switch-form { margin-top: 2rem; color: var(--text-secondary); }
+.switch-form a { color: var(--primary-green); font-weight: 600; text-decoration: none; }
+.switch-form a:hover { text-decoration: underline; }
+.error-box, .success-box { padding: 1rem; margin-bottom: 1.5rem; border-radius: 12px; text-align: left; border: 1px solid; }
+.error-box { background: var(--error-bg); color: var(--error-text); border-color: var(--error-border); }
+.success-box { background: var(--success-bg); color: var(--success-text); border-color: var(--success-border); }

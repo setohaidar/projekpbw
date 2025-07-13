@@ -1,0 +1,143 @@
+/* status_pengajuan.css */
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+p {
+    margin-bottom: 2rem;
+    color: #7f8c8d;
+}
+
+/* Kotak pesan notifikasi */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+/* Kontainer dan Tabel */
+.table-container {
+    overflow-x: auto; /* Agar tabel bisa di-scroll di layar kecil */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+thead th {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+}
+
+tbody td {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.empty-data {
+    text-align: center;
+    color: #7f8c8d;
+    padding: 2rem;
+}
+
+/* Badge untuk Status (Lengkap) */
+.status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    text-transform: capitalize;
+}
+
+/* Status Pengajuan Sampah */
+.status.menunggu-persetujuan { background-color: #ffc107; color: #333; }
+.status.disetujui { background-color: #28a745; }
+.status.jadwal-ditentukan { background-color: #007bff; }
+.status.dalam-penjemputan { background-color: #17a2b8; }
+.status.sampah-sedang-diantar { background-color: #6f42c1; } /* Warna baru */
+.status.selesai { background-color: #6c757d; }
+.status.ditolak, .status.dibatalkan { background-color: #dc3545; }
+
+/* Status Penukaran Hadiah */
+.status.dalam-pengiriman { 
+    background-color: #fd7e14; /* Warna oranye */
+    color: white; 
+}
+
+
+/* Form Atur Jadwal */
+.jadwal-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.jadwal-form input[type="datetime-local"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.jadwal-form button {
+    padding: 7px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* Tombol Kembali */
+.btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #5a6268;
+}
+
+.status.siap-dikirim {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
