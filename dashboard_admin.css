@@ -248,11 +248,23 @@ body {
   font-weight: 700;
 }
 
+.content-header .table-hint {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--gradient-secondary);
+  border-radius: 20px;
+  display: inline-block;
+  border: 1px solid #ecfccb;
+}
+
 .table-wrapper {
   background: var(--surface);
   border-radius: 20px;
   box-shadow: var(--shadow-lg);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   border: 1px solid var(--border);
   position: relative;
   animation: fadeInUp 0.8s ease-out;
@@ -277,10 +289,63 @@ body {
   right: 0;
   height: 4px;
   background: var(--gradient-primary);
+  z-index: 1;
+}
+
+/* Styling untuk scrollbar horizontal */
+.table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--gradient-primary);
+  border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #65a30d 0%, #4d7c0f 100%);
+}
+
+/* Indikator scroll horizontal */
+.table-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: rgba(132, 204, 22, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.table-wrapper:hover::after {
+  opacity: 1;
+}
+
+/* Indikator dengan icon panah */
+.table-wrapper::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2384cc16'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'/%3E%3C/svg%3E");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
 
 table {
   width: 100%;
+  min-width: 800px; /* Minimum width agar tabel tidak terlalu sempit */
   border-collapse: collapse;
 }
 
@@ -608,6 +673,11 @@ tbody tr:last-child td {
   
   .table-wrapper {
     overflow-x: auto;
+    border-radius: 16px;
+  }
+  
+  table {
+    min-width: 600px; /* Reduce minimum width for mobile */
   }
   
   .filter-buttons {
@@ -640,5 +710,16 @@ tbody tr:last-child td {
   th, td {
     padding: 0.8rem;
     font-size: 0.9rem;
+  }
+  
+  /* Enhanced scrolling untuk mobile */
+  .table-wrapper {
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling di iOS */
+    scrollbar-width: thin; /* Firefox scrollbar */
+    scrollbar-color: var(--primary-green) var(--border); /* Firefox scrollbar colors */
+  }
+  
+  table {
+    min-width: 500px; /* Further reduce for very small screens */
   }
 }
