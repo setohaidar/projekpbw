@@ -1,4 +1,4 @@
-/* dashboard_admin.css - Fresh Green Theme */
+/* dashboard_admin.css - Enhanced Fresh Green Theme */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 html {
@@ -9,7 +9,9 @@ html {
   --primary-green: #84cc16;
   --dark-green: #65a30d;
   --light-green: #f7fee7;
-  --sidebar-bg: #1f2937;
+  --gradient-primary: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+  --gradient-secondary: linear-gradient(135deg, #f7fee7 0%, #ecfccb 100%);
+  --sidebar-bg: linear-gradient(180deg, #1f2937 0%, #374151 100%);
   --sidebar-hover: #374151;
   --background: #f9fafb;
   --surface: #ffffff;
@@ -17,59 +19,264 @@ html {
   --text-secondary: #6b7280;
   --text-white: #f9fafb;
   --border: #e5e7eb;
-  --status-pending-bg: #fefce8; --status-pending-text: #a16207;
-  --status-approved-bg: #f0fdf4; --status-approved-text: #15803d;
-  --status-rejected-bg: #fef2f2; --status-rejected-text: #b91c1c;
-  --status-scheduled-bg: var(--light-green); --status-scheduled-text: var(--dark-green);
-  --status-completed-bg: #f3f4f6; --status-completed-text: #4b5563;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  --status-pending-bg: #fefce8; 
+  --status-pending-text: #a16207;
+  --status-approved-bg: #f0fdf4; 
+  --status-approved-text: #15803d;
+  --status-rejected-bg: #fef2f2; 
+  --status-rejected-text: #b91c1c;
+  --status-scheduled-bg: var(--light-green); 
+  --status-scheduled-text: var(--dark-green);
+  --status-completed-bg: #f3f4f6; 
+  --status-completed-text: #4b5563;
 }
-body, * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Inter", sans-serif; }
-body { background: var(--background); }
-.admin-wrapper { display: flex; min-height: 100vh; }
-.admin-sidebar { width: 280px; background: var(--sidebar-bg); color: var(--text-white); display: flex; flex-direction: column; flex-shrink: 0; }
-.sidebar-header { padding: 2rem 1.5rem; text-align: center; border-bottom: 1px solid #374151; }
-.sidebar-header h2 { font-size: 1.5rem; }
-.sidebar-nav { flex-grow: 1; list-style: none; padding: 1rem 0; }
-.sidebar-nav a { display: block; padding: 1rem 1.5rem; color: #d1d5db; text-decoration: none; font-weight: 500; }
-.sidebar-nav a:hover { background: var(--sidebar-hover); color: white; }
-.sidebar-nav a.active { background: var(--primary-green); color: white; font-weight: 600; }
-.sidebar-footer { padding: 1.5rem; border-top: 1px solid #374151; }
-.sidebar-footer span { display: block; margin-bottom: 1rem; font-weight: 600; }
+
+body, * { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  font-family: "Inter", sans-serif; 
+}
+
+body { 
+  background: var(--background); 
+  line-height: 1.6;
+}
+
+.admin-wrapper { 
+  display: flex; 
+  min-height: 100vh; 
+}
+
+.admin-sidebar { 
+  width: 300px; 
+  background: var(--sidebar-bg); 
+  color: var(--text-white); 
+  display: flex; 
+  flex-direction: column; 
+  flex-shrink: 0;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+}
+
+.admin-sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gradient-primary);
+}
+
+.sidebar-header { 
+  padding: 2.5rem 2rem; 
+  text-align: center; 
+  border-bottom: 1px solid #374151;
+  background: linear-gradient(135deg, rgba(132, 204, 22, 0.1) 0%, rgba(101, 163, 13, 0.1) 100%);
+  position: relative;
+}
+
+.sidebar-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+}
+
+.sidebar-header h2 { 
+  font-size: 1.6rem; 
+  margin-bottom: 0.5rem;
+  color: var(--primary-green);
+  font-weight: 700;
+}
+
+.sidebar-nav { 
+  flex-grow: 1; 
+  list-style: none; 
+  padding: 1.5rem 0; 
+}
+
+.sidebar-nav a { 
+  display: block; 
+  padding: 1.2rem 2rem; 
+  color: #d1d5db; 
+  text-decoration: none; 
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 4px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-nav a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(132, 204, 22, 0.1), rgba(132, 204, 22, 0.2));
+  transition: width 0.3s ease;
+}
+
+.sidebar-nav a:hover::before {
+  width: 100%;
+}
+
+.sidebar-nav a:hover { 
+  background: var(--sidebar-hover); 
+  color: white;
+  transform: translateX(5px);
+}
+
+.sidebar-nav a.active { 
+  background: var(--primary-green); 
+  color: white; 
+  font-weight: 600;
+  border-left-color: #a3e635;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-nav a.active::before {
+  width: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+}
+
+.sidebar-footer { 
+  padding: 2rem; 
+  border-top: 1px solid #374151;
+  background: linear-gradient(135deg, rgba(132, 204, 22, 0.05) 0%, rgba(101, 163, 13, 0.05) 100%);
+}
+
+.sidebar-footer span { 
+  display: block; 
+  margin-bottom: 1.5rem; 
+  font-weight: 600; 
+  color: var(--primary-green);
+}
 
 .btn-logout { 
   display: block; 
   width: 100%; 
-  padding: 8px 12px;
-  background: #ef4444; 
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); 
   color: white; 
-  border-radius: 8px; 
+  border-radius: 12px; 
   text-decoration: none; 
   text-align: center; 
-  font-weight: 500;
+  font-weight: 600;
   border: none;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-logout::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-logout:hover::before {
+  left: 100%;
 }
 
 .btn-logout:hover {
-  background-color: #dc2626;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow-lg);
 }
 
 .btn-logout:active {
-  background-color: #b91c1c;
   transform: translateY(0);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow-md);
 }
 
-.admin-main-content { flex-grow: 1; padding: 2.5rem; overflow-x: auto; }
-.content-header h1 { font-size: 2.25rem; margin-bottom: 2rem; }
+.admin-main-content { 
+  flex-grow: 1; 
+  padding: 3rem; 
+  overflow-x: auto;
+  background: var(--background);
+  position: relative;
+}
+
+.admin-main-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+.content-header { 
+  margin-bottom: 3rem;
+  animation: slideInDown 0.8s ease-out;
+}
+
+@keyframes slideInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-header h1 { 
+  font-size: 2.5rem; 
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
 
 .table-wrapper {
   background: var(--surface);
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  overflow-x: auto;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.table-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
 }
 
 table {
@@ -77,80 +284,222 @@ table {
   border-collapse: collapse;
 }
 
-/* === PERUBAHAN DI SINI === */
-td { 
-  padding: 1rem 1.5rem; 
-  text-align: center; /* Mengatur isi sel menjadi di tengah */
-  border-bottom: 1px solid var(--border); 
-  vertical-align: middle; /* Mengatur posisi vertikal menjadi di tengah */
-}
-
 th { 
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.8rem; 
+  padding: 1.5rem;
+  border-bottom: 2px solid var(--border);
+  font-size: 0.9rem; 
   font-weight: 600; 
   color: var(--text-secondary); 
   text-transform: uppercase; 
   text-align: center; 
-  vertical-align: middle; /* Mengatur posisi vertikal menjadi di tengah */
+  vertical-align: middle;
+  background: var(--gradient-secondary);
 }
 
-tbody tr:last-child td { border-bottom: none; }
+td { 
+  padding: 1.2rem 1.5rem; 
+  text-align: center;
+  border-bottom: 1px solid var(--border); 
+  vertical-align: middle;
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+  background: var(--gradient-secondary);
+}
+
+tbody tr:last-child td { 
+  border-bottom: none; 
+}
 
 .status {
-  padding: 0.4rem 0.8rem;
+  padding: 0.5rem 1rem;
   border-radius: 20px;
   font-weight: 600;
   font-size: 0.8rem;
   text-align: center;
+  white-space: nowrap;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.status:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.status.menunggu-persetujuan, .status.menunggu-konfirmasi { 
+  background-color: var(--status-pending-bg); 
+  color: var(--status-pending-text); 
+}
+
+.status.disetujui, .status.siap-dikirim { 
+  background-color: var(--status-scheduled-bg); 
+  color: var(--status-scheduled-text); 
+}
+
+.status.jadwal-ditentukan, .status.dalam-pengiriman { 
+  background-color: var(--primary-green); 
+  color: white; 
+}
+
+.status.ditolak { 
+  background-color: var(--status-rejected-bg); 
+  color: var(--status-rejected-text); 
+}
+
+.status.selesai { 
+  background-color: var(--status-completed-bg); 
+  color: var(--status-completed-text); 
+}
+
+.action-cell { 
   white-space: nowrap; 
 }
-.status.menunggu-persetujuan, .status.menunggu-konfirmasi { background-color: var(--status-pending-bg); color: var(--status-pending-text); }
-.status.disetujui, .status.siap-dikirim { background-color: var(--status-scheduled-bg); color: var(--status-scheduled-text); }
-.status.jadwal-ditentukan, .status.dalam-pengiriman { background-color: var(--primary-green); color: white; }
-.status.ditolak { background-color: var(--status-rejected-bg); color: var(--status-rejected-text); }
-.status.selesai { background-color: var(--status-completed-bg); color: var(--status-completed-text); }
 
-.action-cell { white-space: nowrap; }
-.action-form, .action-cell form { display: flex; gap: 0.5rem; align-items: center; justify-content: center; }
-.action-cell button, .action-cell .btn-approve, .action-cell .btn-reject { padding: 8px 14px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-.btn-approve { background-color: var(--primary-green); color: white; }
-.btn-approve:hover { background-color: var(--dark-green); }
-.btn-reject { background-color: #fee2e2; color: #ef4444; }
-.btn-reject:hover { background-color: #fecaca; }
-.action-cell select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; margin-right: 0.5rem; }
+.action-form, .action-cell form { 
+  display: flex; 
+  gap: 0.5rem; 
+  align-items: center; 
+  justify-content: center; 
+}
 
-.filter-buttons { display: flex; gap: 10px; margin-top: 1.5rem; margin-bottom: 1rem; }
-.filter-btn { padding: 8px 16px; border: 1px solid var(--border); background-color: var(--surface); color: var(--text-secondary); border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.3s ease; }
-.filter-btn:hover { background-color: var(--light-green); border-color: var(--primary-green); color: var(--dark-green); }
-.filter-btn.active { background-color: var(--primary-green); color: white; border-color: var(--primary-green); }
+.action-cell button, .action-cell .btn-approve, .action-cell .btn-reject { 
+  padding: 10px 16px; 
+  border: none; 
+  border-radius: 8px; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
 
-/* ================================== */
-/* STYLE BARU UNTUK TOMBOL HAPUS    */
-/* ================================== */
+.btn-approve { 
+  background: var(--gradient-primary); 
+  color: white; 
+}
+
+.btn-approve::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-approve:hover::before {
+  left: 100%;
+}
+
+.btn-approve:hover { 
+  background: linear-gradient(135deg, #65a30d 0%, #4d7c0f 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-reject { 
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); 
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.btn-reject:hover { 
+  background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.action-cell select { 
+  padding: 10px 12px; 
+  border: 2px solid var(--border); 
+  border-radius: 8px; 
+  margin-right: 0.5rem;
+  transition: all 0.3s ease;
+  background: var(--surface);
+}
+
+.action-cell select:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgb(132 204 22 / 0.2);
+}
+
+.filter-buttons { 
+  display: flex; 
+  gap: 12px; 
+  margin-top: 2rem; 
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn { 
+  padding: 10px 20px; 
+  border: 2px solid var(--border); 
+  background-color: var(--surface); 
+  color: var(--text-secondary); 
+  border-radius: 25px; 
+  cursor: pointer; 
+  font-weight: 500; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-secondary);
+  transition: left 0.3s ease;
+}
+
+.filter-btn:hover::before {
+  left: 100%;
+}
+
+.filter-btn:hover { 
+  background: var(--gradient-secondary); 
+  border-color: var(--primary-green); 
+  color: var(--dark-green);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-btn.active { 
+  background: var(--gradient-primary); 
+  color: white; 
+  border-color: var(--primary-green);
+  box-shadow: var(--shadow-md);
+}
+
+.filter-btn.active::before {
+  display: none;
+}
 
 .btn-delete {
-  background-color: #ef4444; /* Warna dasar merah */
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
-  padding: 8px 16px;
+  padding: 10px 16px;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
-  gap: 8px; /* Jarak antara ikon dan teks */
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
-.btn-delete:hover {
-  background-color: #dc2626; /* Warna merah lebih gelap saat hover */
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-/* Menambahkan ikon tempat sampah (SVG) sebelum teks */
 .btn-delete::before {
   content: '';
   display: inline-block;
@@ -161,36 +510,135 @@ tbody tr:last-child td { border-bottom: none; }
   mask-size: cover;
 }
 
+.btn-delete:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
 .btn-confirm {
- background-color: #16a34a; /* Warna hijau yang lebih menarik */
- color: white;
- padding: 10px 20px;
- border: none;
- border-radius: 8px;
- font-weight: 600;
- cursor: pointer;
- transition: all 0.2s ease;
+  background: var(--gradient-primary);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-confirm::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-confirm:hover::before {
+  left: 100%;
 }
 
 .btn-confirm:hover {
- background-color: #15803d; /* Warna hijau lebih gelap saat hover */
- transform: translateY(-2px);
- box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, #65a30d 0%, #4d7c0f 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
-.modal-content form button.btn-approve { /* Override style lama di modal */
-   background-color: #16a34a;
-   color: white;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 8px;
-   font-weight: 600;
-   cursor: pointer;
-   transition: all 0.2s ease;
+.modal-content form button.btn-approve {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.modal-content form button.btn-approve::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.modal-content form button.btn-approve:hover::before {
+  left: 100%;
 }
 
 .modal-content form button.btn-approve:hover {
-   background-color: #15803d;
-   transform: translateY(-2px);
-   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, #65a30d 0%, #4d7c0f 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-wrapper {
+    flex-direction: column;
+  }
+  
+  .admin-sidebar {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .admin-main-content {
+    padding: 2rem 1rem;
+  }
+  
+  .content-header h1 {
+    font-size: 2rem;
+  }
+  
+  .table-wrapper {
+    overflow-x: auto;
+  }
+  
+  .filter-buttons {
+    gap: 8px;
+  }
+  
+  .filter-btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-main-content {
+    padding: 1rem;
+  }
+  
+  .content-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .sidebar-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .sidebar-nav a {
+    padding: 1rem 1.5rem;
+  }
+  
+  th, td {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
 }
